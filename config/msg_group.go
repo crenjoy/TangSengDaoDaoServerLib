@@ -222,8 +222,8 @@ func (c *Context) SendGroupMemberBeRemove(req *MsgGroupMemberRemoveReq) error {
 		ChannelType: common.ChannelTypeGroup.Uint8(),
 		Subscribers: subscribers,
 		Payload: []byte(util.ToJson(map[string]interface{}{
-			// "from_uid":  req.Operator,
-			// "from_name": req.OperatorName,
+			"from_uid":  req.Operator,
+			"from_name": req.OperatorName,
 			"content":  "你被{0}移除群聊",
 			"visibles": subscribers,
 			"extra": []UserBaseVo{
@@ -307,6 +307,8 @@ func (c *Context) SendGroupTransferGrouper(req MsgGroupTransferGrouper) error {
 		ChannelID:   req.GroupNo,
 		ChannelType: common.ChannelTypeGroup.Uint8(),
 		Payload: []byte(util.ToJson(map[string]interface{}{
+			"from_uid":  req.Operator,
+            "from_name": req.OperatorName,
 			"content": content,
 			"extra": []UserBaseVo{
 				{
@@ -406,6 +408,8 @@ type MsgGroupTransferGrouper struct {
 	OldGrouperName string `json:"old_grouper_name"` // 老群主名称
 	NewGrouper     string `json:"new_grouper"`      // 新群主
 	NewGrouperName string `json:"new_grouper_name"` // 新群主名称
+	Operator     string        `json:"operator"`      // 操作者uid
+	OperatorName string        `json:"operator_name"` // 操作者名称
 }
 
 // MsgGroupMemberRemoveReq 移除群成员
