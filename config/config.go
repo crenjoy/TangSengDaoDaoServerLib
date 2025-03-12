@@ -266,6 +266,11 @@ type Config struct {
 	// ---------- 系统配置  由系统生成,无需用户配置 ----------
 	AppRSAPrivateKey string
 	AppRSAPubKey     string
+	
+	JmashJwt struct {
+		DecryptKey string  //jwt 解密Key
+		VerifySignKey string //jwt 验证签名Key
+	}
 }
 
 // New New
@@ -723,7 +728,10 @@ func (c *Config) ConfigureWithViper(vp *viper.Viper) {
 	c.Support.Email = c.getString("support.email", c.Support.Email)
 	c.Support.EmailSmtp = c.getString("support.emailSmtp", c.Support.EmailSmtp)
 	c.Support.EmailPwd = c.getString("support.emailPwd", c.Support.EmailPwd)
-
+	
+	//#################### Jmash ####################
+    c.JmashJwt.DecryptKey = c.getString("jmash.jwt_decrypt_key", "")
+    c.JmashJwt.VerifySignKey = c.getString("jmash.jwt_verify_sign_key", "")
 }
 
 func (c *Config) ConfigFileUsed() string {
